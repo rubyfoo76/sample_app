@@ -135,6 +135,30 @@ aside {
   }
 }
 
+/* forms */
+input, textarea, select, .uneditable_input {
+  border: 1px solid #bbb;
+  width:100%;
+  margin-bottom:15px;
+  @include box-sizing;
+}
+
+input {
+  height:auto !important;
+}
+
+#error_explanation {
+  color:#f00;
+  ul {
+    list-style:none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+}
 
 /* miscellaneous */
 .debug_dump {
