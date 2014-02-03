@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:edit, :update, :index]
   before_action :correct_user, only: [:edit, :update]
+  before_action :admin_user, only: :destroy
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page])
   end
 
   def show
@@ -39,6 +40,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    user = User.find(params[:id])
+    user.destroy
+    flash[:success] = "User '#{user.name}' deleted."
+    redirect_to users_url
+  end
+
   private
   
   def user_params
@@ -60,6 +68,10 @@ class UsersController < ApplicationController
       flash[:error] = "Unauthorized access"
       redirect_to(root_url)
     end
+  end
+
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
   end
 
 end
